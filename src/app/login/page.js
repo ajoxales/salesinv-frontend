@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import "@/app/signup/assets/style.css";
+
+import { StyledLabel, Styledh2, Styledh1, StyledForm } from "../assets/styles";
 
 const Login = () => {
   const router = useRouter();
@@ -57,17 +58,17 @@ const Login = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center">
-      <Form
+      <StyledForm
         onSubmit={(e) => {
           e.preventDefault();
         }}
-        className="form rounded bg-white">
+        className="rounded bg-white">
         <header className="mb-3">
-          <h1 className="sign-up fw-bold">Log In</h1>
-          <h2 className="subtitle">Login to your account</h2>
+          <Styledh1 className="sign-up fw-bold">Log In</Styledh1>
+          <Styledh2>Login to your account</Styledh2>
         </header>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-          <Form.Label className="label">Username</Form.Label>
+        <Form.Group className="mb-3" controlId="usernameInput">
+          <StyledLabel>Username</StyledLabel>
           <Form.Control
             type="text"
             name="username"
@@ -76,8 +77,8 @@ const Login = () => {
             onChange={handleChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
-          <Form.Label className="label">Password</Form.Label>
+        <Form.Group className="mb-3" controlId="passwordInput">
+          <StyledLabel>Password</StyledLabel>
           <Form.Control
             type="password"
             name="password"
@@ -94,8 +95,8 @@ const Login = () => {
         <Button variant="primary" disabled={isValid} onClick={login}>
           Login
         </Button>
-        <span style={{ color: "red" }}>{error}</span>
-      </Form>
+        <span className="text-danger ms-2">{error}</span>
+      </StyledForm>
     </div>
   );
 };

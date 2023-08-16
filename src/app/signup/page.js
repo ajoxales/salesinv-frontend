@@ -1,16 +1,12 @@
 "use client";
 import React from "react";
-import { Container, Form, Button } from "react-bootstrap";
-import Image from "next/image";
+import { Form, Button, Col, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import "@/app/signup/assets/style.css";
 
-//images
-import img from "../assets/signup.jpg";
-import { Darumadrop_One } from "next/font/google";
+import { Styledh1, StyledForm, StyledLabel, Styledh2 } from "../assets/styles";
 
 const SignUp = () => {
   const router = useRouter();
@@ -65,42 +61,42 @@ const SignUp = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center">
-      <Form
+      <StyledForm
         onSubmit={(e) => {
           e.preventDefault();
         }}
         className="form rounded bg-white">
         <header>
-          <h1 className="sign-up fw-bold">Sign Up</h1>
-          <h2 className="subtitle">Create your account</h2>
+          <Styledh1 className="sign-up">Sign Up</Styledh1>
+          <Styledh2 className="subtitle">Create your account</Styledh2>
         </header>
-        <div className="row mt-4">
-          <Form.Group
-            className="col mb-3"
-            controlId="exampleForm.ControlInput1">
-            <Form.Label className="label">First Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="firstName"
-              placeholder="Juan"
-              value={values.firstName}
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Form.Group
-            className="col mb-3"
-            controlId="exampleForm.ControlInput2">
-            <Form.Label className="label">Last Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="lastName"
-              placeholder="Dela Cruz"
-              value={values.lastName}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        </div>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+        <Row className="mt-4">
+          <Col>
+            <Form.Group className="mb-3" controlId="firstnameInput">
+              <StyledLabel className="label">First Name</StyledLabel>
+              <Form.Control
+                type="text"
+                name="firstName"
+                placeholder="Juan"
+                value={values.firstName}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group className="mb-3" controlId="lastnameInput">
+              <Form.Label className="label">Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastName"
+                placeholder="Dela Cruz"
+                value={values.lastName}
+                onChange={handleChange}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Form.Group className="mb-3" controlId="usernameInput">
           <Form.Label className="label">Username</Form.Label>
           <Form.Control
             type="text"
@@ -110,7 +106,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput3">
+        <Form.Group className="mb-3" controlId="emailInput">
           <Form.Label className="label">Email address</Form.Label>
           <Form.Control
             type="email"
@@ -120,7 +116,7 @@ const SignUp = () => {
             onChange={handleChange}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlInput4">
+        <Form.Group className="mb-3" controlId="passwordInput">
           <Form.Label className="label">Password</Form.Label>
           <Form.Control
             type="password"
@@ -138,8 +134,8 @@ const SignUp = () => {
         <Button variant="primary" disabled={isValid} onClick={signup}>
           Sign Up
         </Button>
-        <span style={{ color: "red" }}>{error}</span>
-      </Form>
+        <span className="text-danger ms-2">{error}</span>
+      </StyledForm>
     </div>
   );
 };
