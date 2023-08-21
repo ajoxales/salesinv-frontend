@@ -53,7 +53,7 @@ const UserCart = () => {
     calculateTotalAmount();
   }, [items]);
 
-  const deleteItem = (id) => {
+  const deleteItem = (id, productName, quantity, username) => {
     fetch("http://localhost:4000/user/cart", {
       method: "DELETE",
       headers: {
@@ -61,10 +61,16 @@ const UserCart = () => {
       },
       body: JSON.stringify({
         id: id,
+        productName: productName,
+        quantity: parseInt(quantity),
+        username: username,
       }),
     })
       .then((res) => res.json())
-      .then((data) => setItems(data));
+      .then((data) => setItems(data))
+      .catch((error) => {
+        console.error("Error deleting item:", error);
+      });
   };
 
   const checkOut = () => {
@@ -77,14 +83,12 @@ const UserCart = () => {
       username: id,
       products: items.map((item) => ({
         productName: item.productName,
-        quantity: item.quantity,
+        quantity: parseInt(item.quantity),
         price: item.price,
       })),
       totalPrice: totalAmount,
       datePurchased: new Date(),
     };
-
-    console.log(transactionData);
 
     fetch("http://localhost:4000/user/transactions", {
       method: "POST",
@@ -99,6 +103,19 @@ const UserCart = () => {
           setMessage(
             "Transaction successful. Items transferred to transactions."
           );
+
+          fetch(`http://localhost:4000/user/cart/${id}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then(() => {
+              setItems([]);
+            })
+            .catch((error) => {
+              console.error("Error deleting cart items:", error);
+            });
         } else {
           setMessage("Transaction failed.");
         }
@@ -139,7 +156,14 @@ const UserCart = () => {
                     <Button
                       variant="dark"
                       className="bg-transparent border-0"
-                      onClick={() => deleteItem(item._id)}>
+                      onClick={() =>
+                        deleteItem(
+                          item._id,
+                          item.productName,
+                          item.quantity,
+                          item.username
+                        )
+                      }>
                       <i className="bi bi-dash-circle"></i>
                     </Button>
                   </td>
