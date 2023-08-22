@@ -1,6 +1,7 @@
-import { Poppins } from "next/font/google";
+import { Inter } from "next/font/google";
 import style from "@/app/assets/style.css";
-const poppins = Poppins({
+
+const inter = Inter({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
@@ -13,7 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} ${style.className}`}>
+      <body className={`${inter.className} ${style.className}`}>
         {children}
       </body>
     </html>
