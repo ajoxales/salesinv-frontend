@@ -11,14 +11,14 @@ const Transactions = () => {
   const token = Cookies.get("token");
   const [transactions, setTransactions] = useState([]);
   const [id, setId] = useState("");
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
   useEffect(() => {
     if (token) {
       const decodedToken = jwtDecode(token);
-      console.log("Decoded Token:", decodedToken);
       setId(decodedToken.username);
 
-      fetch(`http://localhost:4000/user/transactions?username=${id}`, {
+      fetch(`${serverURL}/user/transactions?username=${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -31,7 +31,6 @@ const Transactions = () => {
           return response.json();
         })
         .then((data) => {
-          console.log("Fetched Transaction Data:", data);
           setTransactions(data);
         })
         .catch((error) => {

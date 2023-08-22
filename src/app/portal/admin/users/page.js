@@ -7,15 +7,16 @@ import { useEffect, useState } from "react";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
   useEffect(() => {
-    fetch("http://localhost:4000/users")
+    fetch(`${serverURL}/users`)
       .then((data) => data.json())
       .then((data) => setUsers(data));
   }, []);
 
   const deleteUser = (id) => {
-    fetch("http://localhost:4000/users", {
+    fetch(`${serverURL}/users`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +29,6 @@ const Users = () => {
       .then((data) => setUsers(data));
   };
 
-  console.log(users);
   return (
     <div>
       <Container>

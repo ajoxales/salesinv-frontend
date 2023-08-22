@@ -12,6 +12,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [decoded, setDecoded] = useState({});
   const [message, setMessage] = useState("");
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
   useEffect(() => {
     if (token) {
@@ -21,13 +22,13 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:4000/products")
+    fetch(`${serverURL}/products`)
       .then((data) => data.json())
       .then((data) => setProducts(data));
   }, []);
 
   const addToCart = (product) => {
-    fetch("http://localhost:4000/user/cart", {
+    fetch(`${serverURL}/user/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,8 +46,6 @@ const Products = () => {
       setMessage("");
     }, 1500);
   };
-
-  console.log(decoded.username);
 
   return (
     <div>

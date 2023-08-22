@@ -12,11 +12,11 @@ const UserCart = () => {
   const [items, setItems] = useState([]);
   const [message, setMessage] = useState("");
   const [totalAmount, setTotalAmount] = useState(0);
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
   useEffect(() => {
     if (token) {
       const decodedToken = jwtDecode(token);
-      console.log("Decoded Token:", decodedToken);
       setId(decodedToken.username);
 
       fetch(`http://localhost:4000/user/cart?username=${id}`, {
@@ -32,7 +32,6 @@ const UserCart = () => {
           return response.json();
         })
         .then((data) => {
-          console.log("Fetched Cart Data:", data);
           setItems(data);
         })
         .catch((error) => {
@@ -54,16 +53,16 @@ const UserCart = () => {
   }, [items]);
 
   const deleteItem = (id, productName, quantity, username) => {
-    fetch("http://localhost:4000/user/cart", {
+    fetch(`${serverURL}/user/cart`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: id,
-        productName: productName,
+        id,
+        productName,
         quantity: parseInt(quantity),
-        username: username,
+        username,
       }),
     })
       .then((res) => res.json())
@@ -90,7 +89,7 @@ const UserCart = () => {
       datePurchased: new Date(),
     };
 
-    fetch("http://localhost:4000/user/transactions", {
+    fetch(`${serverURL}/user/transactions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -104,7 +103,7 @@ const UserCart = () => {
             "Transaction successful. Items transferred to transactions."
           );
 
-          fetch(`http://localhost:4000/user/cart/${id}`, {
+          fetch(`${serverURL}/user/cart/${id}`, {
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",

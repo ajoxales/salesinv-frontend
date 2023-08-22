@@ -42,7 +42,7 @@ export default function AdminLayout({ children }) {
               <Navbar.Collapse>
                 <Nav>
                   <Navbar.Brand>
-                    <i class="bi bi-person-circle text-dark fs-4 d-none d-lg-block"></i>
+                    <i className="bi bi-person-circle text-dark fs-4 d-none d-lg-block"></i>
                   </Navbar.Brand>
                   <NavDropdown title={decoded.name} menuVariant="light">
                     <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>

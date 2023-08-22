@@ -8,15 +8,16 @@ import Link from "next/link";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
   useEffect(() => {
-    fetch("http://localhost:4000/products")
+    fetch(`${serverURL}/products`)
       .then((data) => data.json())
       .then((data) => setProducts(data));
   }, []);
 
   const deleteProduct = (id) => {
-    fetch("http://localhost:4000/products", {
+    fetch(`${serverURL}/products`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

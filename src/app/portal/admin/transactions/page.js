@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
   useEffect(() => {
-    fetch("http://localhost:4000/transactions")
+    fetch(`${serverURL}/transactions`)
       .then((data) => data.json())
       .then((data) => setTransactions(data));
   }, []);

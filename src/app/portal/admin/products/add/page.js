@@ -12,6 +12,7 @@ const AddProduct = () => {
     price: 0.0,
   });
   const [message, setMessage] = useState("");
+  const serverURL = process.env.NEXT_PUBLIC_SERVER_URL;
 
   const handleChange = (e) => {
     setValues((state) => {
@@ -49,7 +50,7 @@ const AddProduct = () => {
 
   //to backend
   const addNewProduct = () => {
-    fetch("http://localhost:4000/products", {
+    fetch(`${serverURL}/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
